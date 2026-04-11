@@ -20,7 +20,6 @@ brew "ripgrep"                    # rg (better grep)
 brew "fd"                         # better find
 brew "jq"                         # JSON processor
 brew "wget"
-brew "pandoc"
 
 # Shell enhancements
 brew "zsh-autosuggestions"
@@ -45,7 +44,6 @@ cask "karabiner-elements"         # key remapping — enables hyper key for Hamm
 # Dev tools
 cask "visual-studio-code@insiders"
 cask "docker"
-cask "sourcetree"
 
 # Fonts (required for eza --icons)
 cask "font-fira-code-nerd-font"
@@ -53,12 +51,8 @@ cask "font-fira-code-nerd-font"
 # Apps
 cask "obsidian"
 cask "dropbox"
-cask "firefox"
 cask "vivaldi"
 cask "signal"
 cask "slack"
 cask "zoom"
-cask "libreoffice"
-cask "mactex"
-cask "jan"
 cask "lm-studio"
