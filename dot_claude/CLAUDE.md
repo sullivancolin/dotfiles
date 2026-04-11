@@ -70,7 +70,7 @@
 | Python compilation/JIT | Numba, Mypyc, Cython, Codon (interest in compiled Python) | |
 | Rust bindings | PyO3 + maturin | |
 | Notebooks | Jupyter where appropriate, interested in Marimo | |
-| Docs | Material for MkDocs + mkdocstrings | Sphinx |
+| Docs | Zensical | Material for Mkdocs |
 | Code generation/injection | Cog (inject content into markdown, text files — e.g., coverage reports) | |
 
 ## CI/CD & Deployment

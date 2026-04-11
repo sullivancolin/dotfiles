@@ -7,10 +7,12 @@ macOS (primary) and Ubuntu/devcontainers (secondary).
 
 | File | Target |
 |---|---|
+| `dot_zprofile.tmpl` | `~/.zprofile` |
 | `dot_zshrc.tmpl` | `~/.zshrc` |
 | `dot_config/zsh/exports.zsh` | `~/.config/zsh/exports.zsh` |
 | `dot_config/zsh/aliases.zsh` | `~/.config/zsh/aliases.zsh` |
 | `dot_gitconfig.tmpl` | `~/.gitconfig` |
+| `dot_gitignore_global` | `~/.gitignore_global` |
 | `dot_tmux.conf` | `~/.tmux.conf` |
 | `dot_hammerspoon/init.lua` | `~/.hammerspoon/init.lua` |
 | `dot_config/karabiner/karabiner.json` | `~/.config/karabiner/karabiner.json` |
@@ -18,7 +20,7 @@ macOS (primary) and Ubuntu/devcontainers (secondary).
 | `dot_claude/settings.json` | `~/.claude/settings.json` |
 | `iterm2/profile.json` | installed to iTerm2 DynamicProfiles via script |
 
-Shell: **zsh** + [Oh My Zsh](https://ohmyz.sh) + [Starship](https://starship.rs)  
+Shell: **zsh** + [Oh My Zsh](https://ohmyz.sh) + [Starship](https://starship.rs)
 Terminal: **iTerm2** · Key remapping: **Karabiner-Elements** · WM automation: **Hammerspoon**
 
 ---
