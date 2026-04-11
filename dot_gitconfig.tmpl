@@ -1,0 +1,28 @@
+[user]
+	name  = {{ .name }}
+	email = {{ .email }}
+
+[init]
+	defaultBranch = main
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = false
+
+[alias]
+	lg        = log --oneline --graph --decorate --all
+	st        = status -sb
+	co        = checkout
+	br        = branch
+	uncommit  = reset --soft HEAD~1
+
+[core]
+	editor = code-insiders --wait
+
+[merge]
+	tool = vscode-insiders
+
+[mergetool "vscode-insiders"]
+	cmd = code-insiders --wait $MERGED

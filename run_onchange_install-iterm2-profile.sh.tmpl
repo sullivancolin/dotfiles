@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Installs the iTerm2 Dynamic Profile whenever iterm2/profile.json changes.
+# chezmoi re-runs this script when the hash below changes.
+{{- if ne .chezmoi.os "darwin" }}
+exit 0
+{{- end }}
+
+# Hash of profile — triggers re-run when profile.json content changes:
+# {{ include "iterm2/profile.json" | sha256sum }}
+
+DEST="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+mkdir -p "$DEST"
+cp "{{ .chezmoi.sourceDir }}/iterm2/profile.json" "$DEST/dotfiles-profile.json"
+echo "iTerm2 profile installed. Restart iTerm2 to apply."
