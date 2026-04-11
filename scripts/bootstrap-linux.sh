@@ -4,12 +4,19 @@ set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Use sudo only when not already root (bare Ubuntu containers run as root)
+if [[ "$(id -u)" -eq 0 ]]; then
+  SUDO=""
+else
+  SUDO="sudo"
+fi
+
 echo "Updating apt..."
-sudo apt-get update -qq
+$SUDO apt-get update -qq
 
 # Core tools
 echo "Installing core tools..."
-sudo apt-get install -y -qq \
+$SUDO apt-get install -y -qq \
   zsh \
   git \
   curl \
@@ -17,28 +24,49 @@ sudo apt-get install -y -qq \
   jq \
   ripgrep \
   fd-find \
-  fzf \
   unzip
+
+# Detect architecture for GitHub release downloads
+ARCH="$(uname -m)"
+DEB_ARCH="$(dpkg --print-architecture)"   # amd64 or arm64
 
 # bat — apt version is often stale, install from GitHub releases
 if ! command -v bat &>/dev/null; then
   echo "Installing bat..."
   BAT_VERSION="$(curl -sI https://github.com/sharkdp/bat/releases/latest | grep -i location | sed 's/.*tag\/v//' | tr -d '[:space:]')"
-  curl -sLO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb"
-  sudo dpkg -i "bat_${BAT_VERSION}_amd64.deb"
-  rm "bat_${BAT_VERSION}_amd64.deb"
+  curl -sLO "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${DEB_ARCH}.deb"
+  $SUDO dpkg -i "bat_${BAT_VERSION}_${DEB_ARCH}.deb"
+  rm "bat_${BAT_VERSION}_${DEB_ARCH}.deb"
 fi
 
 # eza — not in apt, install from GitHub releases
 if ! command -v eza &>/dev/null; then
   echo "Installing eza..."
   EZA_VERSION="$(curl -sI https://github.com/eza-community/eza/releases/latest | grep -i location | sed 's/.*tag\/v//' | tr -d '[:space:]')"
-  curl -sL "https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz" | \
-    sudo tar -xz -C /usr/local/bin
+  case "$ARCH" in
+    x86_64)  EZA_ARCH="x86_64-unknown-linux-gnu" ;;
+    aarch64) EZA_ARCH="aarch64-unknown-linux-gnu" ;;
+    *)       echo "Unsupported arch for eza: $ARCH" && exit 1 ;;
+  esac
+  curl -sL "https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_${EZA_ARCH}.tar.gz" | \
+    $SUDO tar -xz -C /usr/local/bin
+fi
+
+# fzf — apt version in Ubuntu 22.04 is too old (v0.29); install from GitHub releases
+if ! command -v fzf &>/dev/null; then
+  echo "Installing fzf..."
+  FZF_VERSION="$(curl -sI https://github.com/junegunn/fzf/releases/latest | grep -i location | sed 's/.*tag\/v//' | tr -d '[:space:]')"
+  case "$ARCH" in
+    x86_64)  FZF_ARCH="linux_amd64" ;;
+    aarch64) FZF_ARCH="linux_arm64" ;;
+    *)       echo "Unsupported arch for fzf: $ARCH" && exit 1 ;;
+  esac
+  curl -sL "https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-${FZF_ARCH}.tar.gz" | \
+    $SUDO tar -xz -C /usr/local/bin
 fi
 
 # zsh-autosuggestions + zsh-syntax-highlighting
-sudo apt-get install -y -qq zsh-autosuggestions zsh-syntax-highlighting 2>/dev/null || \
+$SUDO apt-get install -y -qq zsh-autosuggestions zsh-syntax-highlighting 2>/dev/null || \
   echo "Note: zsh-autosuggestions/zsh-syntax-highlighting not in apt — will source from oh-my-zsh plugins"
 
 # Oh My Zsh (unattended)
@@ -66,9 +94,13 @@ if ! command -v just &>/dev/null; then
     bash -s -- --to "$HOME/.local/bin"
 fi
 
+# Ensure ~/.ssh exists (required by oh-my-zsh ssh-agent plugin)
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+
 # Set zsh as default shell
 ZSH_PATH="$(which zsh)"
 if [[ "$SHELL" != "$ZSH_PATH" ]]; then
   echo "Setting zsh as default shell..."
-  chsh -s "$ZSH_PATH" || sudo chsh -s "$ZSH_PATH" "$USER"
+  chsh -s "$ZSH_PATH" || $SUDO chsh -s "$ZSH_PATH" "$USER"
 fi

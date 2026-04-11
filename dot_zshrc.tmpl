@@ -12,7 +12,6 @@ plugins=(
     ssh-agent
     gnu-utils
     brew
-    fzf
     vscode
 )
 
@@ -71,8 +70,10 @@ if command -v uv &>/dev/null; then
   eval "$(uv generate-shell-completion zsh)"
 fi
 
-# fzf key bindings and completions
-source <(fzf --zsh)
+# fzf key bindings and completions (--zsh flag requires fzf ≥ 0.48)
+if command -v fzf &>/dev/null && fzf --zsh &>/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 # LM Studio CLI (macOS only)
 {{- if eq .chezmoi.os "darwin" }}
