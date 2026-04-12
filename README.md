@@ -18,7 +18,6 @@ macOS (primary) and Ubuntu/devcontainers (secondary).
 | `dot_config/karabiner/karabiner.json` | `~/.config/karabiner/karabiner.json` |
 | `dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `dot_claude/settings.json` | `~/.claude/settings.json` |
-| `iterm2/profile.json` | installed to iTerm2 DynamicProfiles via script |
 
 Shell: **zsh** + [Oh My Zsh](https://ohmyz.sh) + [Starship](https://starship.rs)
 Terminal: **iTerm2** · Key remapping: **Karabiner-Elements** · WM automation: **Hammerspoon**
@@ -227,22 +226,6 @@ chezmoi forget ~/.config/sometool/config
 ```
 
 The file stays in `$HOME` unchanged — chezmoi just stops tracking it.
-
----
-
-## iTerm2 profile
-
-The profile is stored in `iterm2/profile.json` and installed to
-`~/Library/Application Support/iTerm2/DynamicProfiles/` by a chezmoi
-`run_onchange_` script. iTerm2 hot-reloads Dynamic Profiles on change, but a
-restart may be needed for new profiles to appear in Preferences.
-
-To update your profile:
-
-1. In iTerm2: **Preferences → Profiles → (select profile) → Other Actions → Copy Profile as JSON**
-2. Paste the JSON into `iterm2/profile.json`
-3. Run `chezmoi apply` — the install script re-runs automatically because the file hash changed
-4. Commit: `git add iterm2/profile.json && git commit -m "chore: update iTerm2 profile"`
 
 ---
 
