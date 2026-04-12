@@ -23,8 +23,8 @@ if [ -d "$HOME/.local/share/chezmoi/.git" ]; then
   echo "Applying dotfiles..."
   chezmoi apply
 else
-  echo "Initialising chezmoi from gh:sullivancolin/dotfiles..."
-  chezmoi init --apply gh:sullivancolin/dotfiles
+  echo "Initialising chezmoi from git@github.com:sullivancolin/dotfiles.git..."
+  chezmoi init --apply git@github.com:sullivancolin/dotfiles.git
 fi
 
 echo "Done."

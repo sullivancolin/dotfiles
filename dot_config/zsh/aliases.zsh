@@ -1,6 +1,6 @@
 # Modern Unix replacements
-alias ls="eza --git --icons"
-alias ll="eza -la --git --icons"
+alias ls="eza --git --icons=auto"
+alias ll="eza -la --git --icons=auto"
 alias cat="bat"
 
 # fzf with bat preview
