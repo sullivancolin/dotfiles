@@ -3,13 +3,11 @@ tap "homebrew/bundle"
 # Core shell / dev
 brew "git"
 brew "gh"                         # GitHub CLI
-brew "zsh"
 brew "chezmoi"
 brew "starship"
 brew "tmux"
 
 # Python / dev workflow
-brew "uv"                         # replaces pyenv + pipx
 brew "just"
 
 # Modern Unix replacements
@@ -20,6 +18,7 @@ brew "ripgrep"                    # rg (better grep)
 brew "fd"                         # better find
 brew "jq"                         # JSON processor
 brew "wget"
+brew "pandoc"
 
 # Shell enhancements
 brew "zsh-autosuggestions"
@@ -27,6 +26,7 @@ brew "zsh-syntax-highlighting"
 
 # Git tooling
 brew "delta"                      # syntax-highlighted diffs
+brew "llmfit"
 
 # System monitoring
 brew "asitop"
@@ -44,15 +44,19 @@ cask "karabiner-elements"         # key remapping — enables hyper key for Hamm
 # Dev tools
 cask "visual-studio-code@insiders"
 cask "docker"
+cask "orbstack"                   # Docker alternative / VM manager
+cask "rectangle"                  # window manager
 
 # Fonts (required for eza --icons)
 cask "font-fira-code-nerd-font"
 
 # Apps
 cask "obsidian"
+cask "ollama-app"                 # Ollama GUI
 cask "dropbox"
 cask "vivaldi"
 cask "signal"
 cask "slack"
 cask "zoom"
 cask "lm-studio"
+cask "tailscale-app"              # VPN mesh
