@@ -25,9 +25,23 @@ if ! command -v brew &>/dev/null; then
   fi
 fi
 
+# uv
+if ! command -v uv &>/dev/null; then
+  echo "Installing uv..."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Install all packages from Brewfile
 echo "Running brew bundle..."
 brew bundle --file="$DOTFILES_DIR/Brewfile"
+
+# uv tools
+echo "Installing uv tools..."
+while IFS= read -r tool || [[ -n "$tool" ]]; do
+  [[ -z "$tool" || "$tool" == \#* ]] && continue
+  uv tool install "$tool"
+done < "$DOTFILES_DIR/uv-tools"
 
 # Set zsh as default shell if not already
 ZSH_PATH="$(which zsh)"

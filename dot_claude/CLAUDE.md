@@ -12,15 +12,16 @@
 
 ## Python & Tooling
 
-- **Python**: 3.12+ only
+- **Python**: 3.14+ only
 - **Project management**: `uv` (always — no pip, no poetry, no conda)
 - **Command runner**: `just` with standard targets: `dev`, `test`, `lint`, `format`, `docs`, `build`, `ci`, `clean`
 - **Formatting/linting**: `ruff` (format + check)
 - **Type checking**: `ty`
 - **Testing**: `pytest` + `pytest-cov` + `pytest-html`, heavy use of fixtures + `@pytest.mark.parametrize`
-- **Pre-commit**: kitchen sink — ruff format/lint, ty, commitlint (conventional commits), trailing whitespace, YAML lint, secrets detection, etc.
+- **Pre-commit hooks**: Use Prek instead of classic pre-commit. kitchen sink — ruff format/lint, ty, commitlint (conventional commits), trailing whitespace, YAML lint, secrets detection, etc.
 - **Project layout**: src-layout (`src/package_name/`)
 - **Versioning**: Semantic versioning with conventional commits
+- **Documentation**: Zensical with mkdocstrings for auto API documentation
 
 ## Code Style
 
@@ -36,7 +37,7 @@
 | Domain | Preferred | Over |
 |---|---|---|
 | Web framework | FastAPI | Flask |
-| CLI | Typer + Rich | Click, argparse |
+| CLI | Typer + Rich + Trogon | Click, argparse |
 | TUI | Textual | curses |
 | Data validation | Pydantic v2+ | dataclasses, attrs |
 | Settings/config | pydantic-settings | python-dotenv |
@@ -46,7 +47,7 @@
 | ORM | SQLModel | raw SQLAlchemy |
 | Small DB | SQLite | |
 | Large DB | PostgreSQL | |
-| Analytics at scale | Parquet + Polars or DuckDB | |
+| Analytics at scale | Parquet + Polars or DuckDB | Dask DataFrame |
 | Logging | structlog | stdlib logging |
 | HTTP client | httpx | requests |
 | Multiprocessing/distributed | Ray | multiprocessing, Celery |
@@ -64,10 +65,10 @@
 | Agentic frameworks | Pydantic AI | LangChain, LangGraph, CrewAI |
 | Pipeline data validation | Pandera | |
 | Property-based testing | Hypothesis | |
-| Caching / message broker | Redis | |
+| Caching / message broker | Redis or diskcache | |
 | Observability | Logfire (primary), OpenTelemetry | |
 | LLM observability | Logfire (primary), W&B Weave (secondary) | LangSmith |
-| Python compilation/JIT | Numba, Mypyc, Cython, Codon (interest in compiled Python) | |
+| Python compilation/JIT | Numba, Mypyc, Cython, (interest in compiled Python) | |
 | Rust bindings | PyO3 + maturin | |
 | Notebooks | Jupyter where appropriate, interested in Marimo | |
 | Docs | Zensical | Material for Mkdocs |
@@ -79,6 +80,8 @@
   - Test against built wheels (not editable installs)
   - Attach wheels as workflow artifacts
   - Write coverage reports as markdown to Actions output
+  - Attach html coverage reports as artifacts
+  - Use new git tag to trigger creating a github release
 - **Pre-commit**: Enforced in CI
 - **Git workflow**: GitHub Flow (feature branches + PRs to main)
 - **Containers**: Docker + Kubernetes
@@ -88,7 +91,7 @@
 ## Editor & Environment
 
 - **Editor**: VSCode + Claude Code
-- **Devcontainers**: Yes, when appropriate
+- **Devcontainers**: Yes, when appropriate, codespaces are nice to have
 
 ## Development Workflow
 

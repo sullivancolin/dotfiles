@@ -35,9 +35,11 @@ Terminal: **iTerm2** · Key remapping: **Karabiner-Elements** · WM automation: 
 This will:
 1. Install Xcode CLI tools (if missing)
 2. Install Homebrew (if missing)
-3. Run `brew bundle` to install all tools and apps from `Brewfile`
-4. Set zsh as the default shell
-5. Install chezmoi and apply all dotfiles
+3. Install uv via the official curl installer
+4. Run `brew bundle` to install all tools and apps from `Brewfile`
+5. Install global uv tools from `uv-tools`
+6. Set zsh as the default shell
+7. Install chezmoi and apply all dotfiles
 
 ### Ubuntu / devcontainer
 
@@ -48,8 +50,8 @@ git clone https://github.com/sullivancolin/dotfiles.git ~/dotfiles
 bash ~/dotfiles/bootstrap.sh
 ```
 
-This installs zsh, Oh My Zsh, Starship, uv, just, and core CLI tools, then applies
-dotfiles via chezmoi.
+This installs zsh, Oh My Zsh, Starship, uv, just, and core CLI tools, installs global
+uv tools from `uv-tools`, then applies dotfiles via chezmoi.
 
 ---
 
@@ -170,6 +172,18 @@ brew bundle
 ```
 
 **Linux** — add the install command to `scripts/bootstrap-linux.sh`.
+
+### Adding a global uv tool
+
+Add the package name to `uv-tools` (supports version specs like `llm>=0.18`):
+
+```bash
+echo "httpie" >> uv-tools
+uv tool install httpie
+```
+
+The tool will be installed on all machines on next bootstrap. `uv tool install` is
+idempotent — re-running bootstrap won't reinstall already-installed tools.
 
 ### Managing a new tool's config file
 

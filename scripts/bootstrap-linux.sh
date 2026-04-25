@@ -86,6 +86,14 @@ if ! command -v uv &>/dev/null; then
   echo "Installing uv..."
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
+export PATH="$HOME/.local/bin:$PATH"
+
+# uv tools
+echo "Installing uv tools..."
+while IFS= read -r tool || [[ -n "$tool" ]]; do
+  [[ -z "$tool" || "$tool" == \#* ]] && continue
+  uv tool install "$tool"
+done < "$DOTFILES_DIR/uv-tools"
 
 # just
 if ! command -v just &>/dev/null; then

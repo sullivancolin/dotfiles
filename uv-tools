@@ -1,0 +1,28 @@
+# uv tool installs — synced across machines via bootstrap
+# Format: package-name or package-name>=version
+# Run: uv tool install <name>  (idempotent)
+
+# LLM / AI
+llm                 # Simon Willison's LLM CLI — query models from the terminal
+batrachian-toad     # Toad AI agent front-end
+
+# Dev tooling
+prek                # Rust-based pre-commit hook runner — faster, no Python required
+showboat            # executable demo documents with verified shell output
+
+# Simon Willison ecosystem
+sqlite-utils        # CLI + library for creating and transforming SQLite databases
+datasette           # instant web UI for exploring SQLite databases
+
+# Ned Batchelder
+cogapp              # code generation — inject computed content into source files in-place
+
+# Terminal data exploration
+visidata            # spreadsheet-like TUI for CSV, JSON, Parquet, SQL, and more
+
+# DB CLIs
+litecli             # SQLite CLI with autocomplete and syntax highlighting
+pgcli               # PostgreSQL CLI with autocomplete and syntax highlighting
+
+# Profiling
+memray              # memory profiler — flamegraph reports for heap allocations
