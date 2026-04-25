@@ -11,7 +11,6 @@ plugins=(
     mosh
     ssh-agent
     gnu-utils
-    brew
     vscode
 )
 
@@ -26,6 +25,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
   {{- else }}
 eval "$(/usr/local/bin/brew shellenv)"
   {{- end }}
+export PATH="$HOME/.local/bin:$PATH"
 {{- else }}
 # Linux: tools installed to ~/.local/bin (uv, chezmoi, just, starship)
 export PATH="$HOME/.local/bin:$PATH"
