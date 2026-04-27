@@ -22,9 +22,12 @@ fi
 if [ -d "$HOME/.local/share/chezmoi/.git" ]; then
   echo "Applying dotfiles..."
   chezmoi apply
+elif [ -d "$DOTFILES_DIR/.git" ]; then
+  echo "Initialising chezmoi from local source $DOTFILES_DIR..."
+  chezmoi init --apply --source "$DOTFILES_DIR"
 else
-  echo "Initialising chezmoi from git@github.com:sullivancolin/dotfiles.git..."
-  chezmoi init --apply git@github.com:sullivancolin/dotfiles.git
+  echo "Initialising chezmoi from https://github.com/sullivancolin/dotfiles.git..."
+  chezmoi init --apply https://github.com/sullivancolin/dotfiles.git
 fi
 
 echo "Done."
