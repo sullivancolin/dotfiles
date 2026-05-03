@@ -40,6 +40,9 @@ brew bundle --file="$DOTFILES_DIR/Brewfile"
 echo "Installing uv tools..."
 while IFS= read -r tool || [[ -n "$tool" ]]; do
   [[ -z "$tool" || "$tool" == \#* ]] && continue
+  tool="${tool%%#*}"          # strip inline comment
+  tool="${tool//[[:space:]]/}" # strip whitespace
+  [[ -z "$tool" ]] && continue
   uv tool install "$tool"
 done < "$DOTFILES_DIR/uv-tools"
 
