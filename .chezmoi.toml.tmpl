@@ -1,8 +1,11 @@
-{{- $name  := env "GIT_AUTHOR_NAME"  -}}
-{{- $email := env "GIT_AUTHOR_EMAIL" -}}
+{{- $name      := env "GIT_AUTHOR_NAME"  -}}
+{{- $email     := env "GIT_AUTHOR_EMAIL" -}}
+{{- $codespace := env "CODESPACES" | not | not -}}
+{{- $container := stat "/.dockerenv" | not | not -}}
+{{- $headless  := or $codespace $container -}}
 
-{{- if not $name  -}}{{- $name  = promptStringOnce . "name"  "Git author name"  -}}{{- end -}}
-{{- if not $email -}}{{- $email = promptStringOnce . "email" "Git author email" -}}{{- end -}}
+{{- if and (not $name)  (not $headless) -}}{{- $name  = promptStringOnce . "name"  "Git author name"  -}}{{- end -}}
+{{- if and (not $email) (not $headless) -}}{{- $email = promptStringOnce . "email" "Git author email" -}}{{- end -}}
 
 [data]
   name  = {{ $name  | quote }}
