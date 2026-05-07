@@ -72,7 +72,7 @@ $SUDO apt-get install -y -qq zsh-autosuggestions zsh-syntax-highlighting 2>/dev/
 # Oh My Zsh (unattended)
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing oh-my-zsh..."
-  RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | RUNZSH=no CHSH=no sh
 fi
 
 # Starship
@@ -109,9 +109,9 @@ fi
 mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"
 
-# Set zsh as default shell
+# Set zsh as default shell (usermod avoids PAM password prompt that chsh requires)
 ZSH_PATH="$(which zsh)"
 if [[ "$SHELL" != "$ZSH_PATH" ]]; then
   echo "Setting zsh as default shell..."
-  chsh -s "$ZSH_PATH" || $SUDO chsh -s "$ZSH_PATH" "$USER"
+  $SUDO usermod -s "$ZSH_PATH" "$USER"
 fi
