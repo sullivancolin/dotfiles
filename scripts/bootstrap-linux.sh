@@ -105,6 +105,16 @@ if ! command -v just &>/dev/null; then
     bash -s -- --to "$HOME/.local/bin"
 fi
 
+# Claude Code (installed as current user so ~/.claude is user-owned)
+# Requires node/npm — expected from the devcontainer node feature or system install.
+if ! command -v claude &>/dev/null; then
+  echo "Installing Claude Code..."
+  mkdir -p "$HOME/.npm-global"
+  npm config set prefix "$HOME/.npm-global"
+  npm install -g @anthropic-ai/claude-code
+fi
+export PATH="$HOME/.npm-global/bin:$PATH"
+
 # Ensure ~/.ssh exists (required by oh-my-zsh ssh-agent plugin)
 mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"

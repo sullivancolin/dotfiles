@@ -11,6 +11,9 @@ else
   export VISUAL="code-insiders --wait"
 fi
 
+# npm user-local globals (set by bootstrap; avoids root-owned installs in containers)
+export PATH="$HOME/.npm-global/bin:$PATH"
+
 # bat
 export BAT_THEME="TwoDark"
 export BAT_STYLE="full,changes"
