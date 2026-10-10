@@ -9,10 +9,12 @@ plugins=(
     git
     docker
     mosh
-    ssh-agent
     gnu-utils
     vscode
 )
+# In a VS Code devcontainer the host agent is already forwarded via SSH_AUTH_SOCK;
+# the ssh-agent plugin would replace it with a new, empty agent.
+[[ -z "$REMOTE_CONTAINERS" ]] && plugins+=(ssh-agent)
 
 source "$ZSH/oh-my-zsh.sh"
 
